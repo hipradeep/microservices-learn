@@ -8,6 +8,7 @@ import com.hipradeep.user.services.external.services.HotelService;
 import com.hipradeep.user.services.repositories.UserRepository;
 import com.hipradeep.user.services.services.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,9 @@ public class UserController {
     //SIMPLEWAY124
     @Autowired
     private HotelService hotelService;
+
+    public UserController() {
+    }
 
     //CREATE
     //@RequestBody to get all data through JSON (in JSON format)
@@ -98,10 +102,14 @@ public class UserController {
     //GET Single User
     @GetMapping("/{userId}")
    // @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
-    @Retry(name = "ratingHotelService", fallbackMethod = "ratingHotelFallback")
+   // @Retry(name = "ratingHotelService", fallbackMethod = "ratingHotelFallback")
+   // @RateLimiter(name = "userRateLimiter", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<User> getSingleUser(@PathVariable String userId){
+        logger.info("---retry--- {}", reTry);
+        reTry++;
+
         User user = userService.getUser(userId);
-        logger.info("retry ", reTry++);
+
 
         //SIMPLEWAY123
         // fetch user rating from RATING_SERVICE
