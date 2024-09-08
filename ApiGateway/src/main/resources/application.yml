@@ -13,28 +13,40 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
+          filters:
+            - AuthenticationFilter
 
         - id: HOTEL-SERVICE
           uri: lb://HOTEL-SERVICE
           predicates:
             - Path=/hotels/**,/staffs/**
+          filters:
+            - AuthenticationFilter
 
         - id: RATING-SERVICE
           uri: lb://RATING-SERVICE
           predicates:
             - Path=/ratings/**
+          filters:
+            - AuthenticationFilter
 
+        - id: AUTH-SERVICE
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
 
+  config:
+    import: optional:configserver:http://localhost:8085
 
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
 
 
 #okta configuration for api gateway

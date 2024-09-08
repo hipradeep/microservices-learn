@@ -9,9 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Rating-Service" />
         <module name="Hotel-MGMT" />
+        <module name="User-Services" />
+        <module name="Auth-Service" />
         <module name="ConfigServer" />
         <module name="ServiceRegistry" />
-        <module name="User-Services" />
         <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
+      <module name="Auth-Service" options="-parameters" />
       <module name="ConfigServer" options="-parameters" />
       <module name="Hotel-MGMT" options="-parameters" />
       <module name="Rating-Service" options="-parameters" />
