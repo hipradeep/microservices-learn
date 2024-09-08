@@ -4,3 +4,12 @@
 
 # Ignore gitignore file
 .gitignore
+
+# Ignore these target files
+ApiGateway/target/*
+Auth-Service/target/*
+ConfigServer/target/*
+Hotel-MGMT/target/*
+Rating-Service/target/*
+ServiceRegistry/target/*
+User-Services/target/*
