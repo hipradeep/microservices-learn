@@ -7,9 +7,12 @@ import com.hipradeep.user.services.exceptions.ResourceNotFoundException;
 import com.hipradeep.user.services.external.services.HotelService;
 import com.hipradeep.user.services.repositories.UserRepository;
 import com.hipradeep.user.services.services.UserService;
+import com.hipradeep.user.services.utils.AppConfig;
+import com.hipradeep.user.services.utils.HeaderUtil;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,9 @@ public class UserController {
     //SIMPLEWAY124
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private HeaderUtil headerUtil;
 
     public UserController() {
     }
@@ -105,6 +111,7 @@ public class UserController {
    // @Retry(name = "ratingHotelService", fallbackMethod = "ratingHotelFallback")
    // @RateLimiter(name = "userRateLimiter", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<User> getSingleUser(@PathVariable String userId){
+
         logger.info("---retry--- {}", reTry);
         reTry++;
 
@@ -173,5 +180,52 @@ public class UserController {
         this.userRepository.delete(user);
         System.out.println("User deleted");
     }
+
+
+    //GET Single User
+    @GetMapping("u1/{userId}")
+    public ResponseEntity<User> getSingleUserU1(@PathVariable String userId, @RequestHeader("loggedInUser") String userName) {
+        logger.info("---username--- {}", userName);
+
+
+        // Fetch the user details using the user service
+        User user = userService.getUser(userId);
+
+        // Return the user details in the response
+        return ResponseEntity.ok(user);
+    }
+
+    //GET Single User
+    @GetMapping("u2/{userId}")
+    public ResponseEntity<User> getSingleUserU2(@PathVariable String userId,  HttpServletRequest request) {
+        // Fetch the "loggedInUser" header using the utility method
+        String userName = headerUtil.getHeaderValue(request, AppConfig.keyHeaderUsername);
+        logger.info("---u21 username--- {}", userName);
+
+        // Use request object
+        String userNameK = request.getHeader(AppConfig.keyHeaderUsername);
+        String emailK = request.getHeader(AppConfig.keyHeaderEmail);
+        String passwordK = request.getHeader(AppConfig.keyHeaderPassword);
+        String nameK = request.getHeader(AppConfig.keyHeaderName);
+        logger.info("---u22 request username--- {}", userNameK);
+        logger.info("---u22 request email--- {}", emailK);
+        logger.info("---u22 request password--- {}", passwordK);
+        logger.info("---u22 request name--- {}", nameK);
+
+        // no need to request
+        String userName3 = headerUtil.getHeaderValue(AppConfig.keyHeaderUsername);
+
+        logger.info("---u23 username--- {}", userName3);
+
+
+        // Fetch the user details using the user service
+        User user = userService.getUser(userId);
+
+        // Return the user details in the response
+        return ResponseEntity.ok(user);
+    }
+
+
+
 
 }

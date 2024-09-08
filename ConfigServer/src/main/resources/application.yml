@@ -9,4 +9,7 @@ spring:
       server:
         git:
           uri: https://github.com/hipradeep/microservice-config
+          #default-label: main  # The branch to use, e.g., `main`
+          #username: your-github-username  # Optional if private repo
+          #password: your-github-token  # Optional if private repo
           clone-on-start: true
