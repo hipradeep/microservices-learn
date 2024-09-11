@@ -15,6 +15,9 @@
         <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Auth-Service" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

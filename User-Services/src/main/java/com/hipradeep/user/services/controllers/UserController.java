@@ -3,20 +3,25 @@ package com.hipradeep.user.services.controllers;
 import com.hipradeep.user.services.entities.Hotel;
 import com.hipradeep.user.services.entities.Rating;
 import com.hipradeep.user.services.entities.User;
+import com.hipradeep.user.services.entities.UserProfile;
 import com.hipradeep.user.services.exceptions.ResourceNotFoundException;
 import com.hipradeep.user.services.external.services.HotelService;
 import com.hipradeep.user.services.repositories.UserRepository;
+import com.hipradeep.user.services.services.FileService;
+import com.hipradeep.user.services.services.UserProfileService;
 import com.hipradeep.user.services.services.UserService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -164,6 +169,32 @@ public class UserController {
 
         this.userRepository.delete(user);
         System.out.println("User deleted");
+    }
+
+
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    private UserProfileService userProfileService;
+
+    @Value("${project.image}")
+    private String path;
+    @PostMapping("/image/{userId}")
+    public ResponseEntity<UserProfile> uploadUserProfile(@RequestParam("image") MultipartFile image,
+                                                       @PathVariable String userId) throws IOException {
+
+        String fileName = this.fileService.uploadImage(path, image);
+
+        UserProfile userProfile=new UserProfile();
+        userProfile.setProfileUrl(fileName);
+        userProfile.setUserId(userId);
+
+        UserProfile updatedUser = this.userProfileService.uploadProfile(userProfile);
+
+        //CommonDto commonDto=CommonDto.builder().fieldName1(fileName).fieldName2(userId).build();
+
+        return new ResponseEntity<UserProfile>(updatedUser, HttpStatus.OK);
     }
 
 }
