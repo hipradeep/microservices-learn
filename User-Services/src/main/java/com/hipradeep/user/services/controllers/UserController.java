@@ -39,6 +39,15 @@ public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    private UserProfileService userProfileService;
+
+    @Value("${project.image}")
+    private String path;
+
     //SIMPLEWAY123
     @Autowired
     private RestTemplate restTemplate;
@@ -172,14 +181,7 @@ public class UserController {
     }
 
 
-    @Autowired
-    private FileService fileService;
 
-    @Autowired
-    private UserProfileService userProfileService;
-
-    @Value("${project.image}")
-    private String path;
     @PostMapping("/image/{userId}")
     public ResponseEntity<UserProfile> uploadUserProfile(@RequestParam("image") MultipartFile image,
                                                        @PathVariable String userId) throws IOException {

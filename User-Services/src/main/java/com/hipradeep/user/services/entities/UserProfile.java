@@ -19,7 +19,7 @@ public class UserProfile {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Id
+
     @Column(name = "userId")
     private String userId;
 

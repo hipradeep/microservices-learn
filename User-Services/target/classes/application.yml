@@ -7,6 +7,7 @@ spring:
   application:
     name: USER-SERVICE
 
+
   datasource:
     url: jdbc:mysql://localhost:3306/ms_user_schema
     username: root
@@ -26,6 +27,13 @@ spring:
 # to change profile config from config-server present in github.com
 #  profiles:
 #    active: prod
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+project:
+  image: images/
 
 
 # fault tolerance
@@ -68,3 +76,9 @@ resilience4j:
         limit-refresh-period: 4s
         limit-for-period: 2
         timeout-duration: 2s
+
+#handle multipart file
+
+#eureka:
+#  server:
+#    enabled: false
