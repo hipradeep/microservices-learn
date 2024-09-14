@@ -9,14 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Rating-Service" />
         <module name="Hotel-MGMT" />
-        <module name="ConfigServer" />
-        <module name="ServiceRegistry" />
         <module name="User-Services" />
-        <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ApiGateway" target="17" />
       <module name="Auth-Service" target="17" />
+      <module name="ConfigServer" target="17" />
+      <module name="ServiceRegistry" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

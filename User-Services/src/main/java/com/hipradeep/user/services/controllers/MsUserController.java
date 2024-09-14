@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/ms-users")
+public class MsUserController {
 
     @Autowired
     private UserService userService;
@@ -35,7 +35,7 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
+    private Logger logger = LoggerFactory.getLogger(MsUserController.class);
 
     @Autowired
     private FileService fileService;
@@ -63,17 +63,85 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allUsers = userService.getAllUsers();
-        return ResponseEntity.ok(allUsers);
+
+        //SIMPLEWAY123
+        List<User> newList = allUsers.stream().map(user -> {
+            // Specify the type for the ratings list
+//            ResponseEntity<List<Ratings>> responseEntity = restTemplate.exchange(
+//                    "http://localhost:8083/ratings/users/" + user.getUserId(),
+//                    HttpMethod.GET,
+//                    null,
+//                    new ParameterizedTypeReference<>() {
+//                    }
+//            );
+            String ratingUrl="http://localhost:8083/ratings/users/";
+            Rating[] ratingArray = restTemplate.getForObject(ratingUrl + user.getUserId(), Rating[].class  );
+
+            assert ratingArray != null;
+            List<Rating> ratings = Arrays.stream(ratingArray).toList();
+
+            logger.info("{} ", ratings);
+
+            String hotelUrl= "http://localhost:8082/hotels/";
+            List<Rating> newRList = ratings.stream().map(rt -> {
+                //SIMLEWAY123
+               Hotel hotelDetails = restTemplate.getForEntity(hotelUrl + rt.getHotelId(), Hotel.class).getBody();
+
+                logger.info("{} ", hotelDetails);
+                rt.setHotel(hotelDetails);
+
+                return rt;
+            }).collect(Collectors.toList());
+
+            user.setRatings(newRList);
+            return user;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(newList);
     }
 
+    int reTry=0;
     //GET Single User
     @GetMapping("/{userId}")
     public ResponseEntity<User> getSingleUser(@PathVariable String userId){
         User user = userService.getUser(userId);
+        logger.info("retry ", reTry++);
+
+        //SIMPLEWAY123
+        // fetch user rating from RATING_SERVICE
+        //http://localhost:8083/ratings/users/13f7594c-9b9f-4e77-95c7-5e1270deed20
+
+        String ratingUrl="http://localhost:8083/ratings/users/";
+        Rating[] ratingArray = restTemplate.getForObject(ratingUrl + user.getUserId(), Rating[].class  );
+
+
+        assert ratingArray != null;
+        List<Rating> ratings = Arrays.stream(ratingArray).toList();
+
+        logger.info("{} ", ratings);
+        String hotelUrl= "http://localhost:8082/hotels/";
+        List<Rating> newList=  ratings.stream().peek(rt -> {
+            Hotel hotelDetails = restTemplate.getForEntity(hotelUrl+rt.getHotelId(), Hotel.class).getBody();
+
+            logger.info("{} ",hotelDetails);
+            rt.setHotel(hotelDetails);
+
+        }).toList();
+
+
+        user.setRatings(newList);
+
 
         return ResponseEntity.ok(user);
     }
+    public ResponseEntity<User> ratingHotelFallback(String userId, Exception ex) {
+//        logger.info("Fallback is executed because service is down : ", ex.getMessage());
 
+        ex.printStackTrace();
+
+        User user = User.builder().email("dummy@gmail.com").name("Dummy").about("This user is created dummy because some service is down").userId("141234").build();
+        return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+    }
     //UPDATE User
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User user){
