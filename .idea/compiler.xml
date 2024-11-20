@@ -24,7 +24,7 @@
       <module name="ApiGateway" options="-parameters" />
       <module name="ConfigServer" options="-parameters" />
       <module name="Hotel-MGMT" options="-parameters" />
-      <module name="Rating-Service" options="-parameters" />
+      <module name="Rating-Service" options="" />
       <module name="ServiceRegistry" options="-parameters" />
       <module name="User-Services" options="-parameters" />
     </option>
