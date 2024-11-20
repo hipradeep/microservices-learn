@@ -7,13 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Hotel-MGMT" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ApiGateway" target="17" />
       <module name="Auth-Service" target="17" />
       <module name="ConfigServer" target="17" />
-      <module name="Hotel-MGMT" target="17" />
       <module name="Rating-Service" target="1.5" />
       <module name="ServiceRegistry" target="17" />
       <module name="User-Services" target="17" />
