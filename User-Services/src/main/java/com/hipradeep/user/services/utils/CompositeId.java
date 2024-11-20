@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public class CompositeId implements Serializable {
     private String userId;
-    private String entryId;
+    private Integer entryId;
 
     // Default constructor, equals, and hashCode methods
     public CompositeId() {
     }
 
-    public CompositeId(String userId, String entryId) {
+    public CompositeId(String userId, Integer entryId) {
         this.userId = userId;
         this.entryId = entryId;
     }

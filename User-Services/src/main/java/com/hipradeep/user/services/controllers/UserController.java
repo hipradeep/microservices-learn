@@ -113,7 +113,6 @@ public class UserController {
         userProfile.setUserId(userId);
 
         UserProfile updatedUser = this.userProfileService.uploadProfile(userProfile);
-
         //CommonDto commonDto=CommonDto.builder().fieldName1(fileName).fieldName2(userId).build();
 
         return new ResponseEntity<UserProfile>(updatedUser, HttpStatus.OK);
