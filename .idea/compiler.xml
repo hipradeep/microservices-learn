@@ -7,8 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Rating-Service" />
-        <module name="Hotel-MGMT" />
         <module name="User-Services" />
       </profile>
     </annotationProcessing>
@@ -16,6 +14,8 @@
       <module name="ApiGateway" target="17" />
       <module name="Auth-Service" target="17" />
       <module name="ConfigServer" target="17" />
+      <module name="Hotel-MGMT" target="17" />
+      <module name="Rating-Service" target="17" />
       <module name="ServiceRegistry" target="17" />
     </bytecodeTargetLevel>
   </component>
