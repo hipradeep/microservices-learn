@@ -1,5 +1,5 @@
 # Ignore all files in the .idea folder
-.idea/*
+/.idea/*
 
 
 # Keep this specific file in .idea folder (if needed)
@@ -11,3 +11,5 @@ Hotel-MGMT/target/*
 Rating-Service/target/*
 User-Services/target/*
 
+
+/.idea/
