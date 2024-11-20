@@ -1,7 +1,6 @@
 # Ignore all files in the .idea folder
 /.idea/*
 
-
 # Keep this specific file in .idea folder (if needed)
 !.gitignore
 
