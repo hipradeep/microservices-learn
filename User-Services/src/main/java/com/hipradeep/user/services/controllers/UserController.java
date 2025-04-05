@@ -1,7 +1,5 @@
 package com.hipradeep.user.services.controllers;
 
-import com.hipradeep.user.services.entities.Hotel;
-import com.hipradeep.user.services.entities.Rating;
 import com.hipradeep.user.services.entities.User;
 import com.hipradeep.user.services.entities.UserProfile;
 import com.hipradeep.user.services.exceptions.ResourceNotFoundException;
@@ -16,13 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -45,10 +40,6 @@ public class UserController {
 
     @Value("${project.image}")
     private String path;
-
-    //SIMPLEWAY123
-    @Autowired
-    private RestTemplate restTemplate;
 
 
     //CREATE
