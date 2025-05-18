@@ -8,3 +8,5 @@
 /ServiceRegistry/target/
 /Rating-Service/target/
 /Hotel-MGMT/target/
+/ApiGateway/target/
+/ConfigServer/target/
