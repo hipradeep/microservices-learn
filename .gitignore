@@ -3,4 +3,8 @@
 
 
 # Keep this specific file in .idea folder (if needed)
-!.gitignore
+.gitignore
+/User-Services/target/
+/ServiceRegistry/target/
+/Rating-Service/target/
+/Hotel-MGMT/target/
