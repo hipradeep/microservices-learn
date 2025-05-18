@@ -9,20 +9,22 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Rating-Service" />
         <module name="Hotel-MGMT" />
-        <module name="ConfigServer" />
         <module name="ServiceRegistry" />
         <module name="User-Services" />
         <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ConfigServer" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
-      <module name="ConfigServer" options="-parameters" />
-      <module name="Hotel-MGMT" options="-parameters" />
-      <module name="Rating-Service" options="-parameters" />
-      <module name="ServiceRegistry" options="-parameters" />
+      <module name="ConfigServer" options="" />
+      <module name="Hotel-MGMT" options="" />
+      <module name="Rating-Service" options="" />
+      <module name="ServiceRegistry" options="" />
       <module name="User-Services" options="-parameters" />
     </option>
   </component>
