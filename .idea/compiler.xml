@@ -12,7 +12,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ApiGateway" target="17" />
-      <module name="Auth-Service" target="17" />
       <module name="ConfigServer" target="17" />
       <module name="Hotel-MGMT" target="17" />
       <module name="Rating-Service" target="17" />
@@ -24,7 +23,7 @@
       <module name="ApiGateway" options="-parameters" />
       <module name="ConfigServer" options="-parameters" />
       <module name="Hotel-MGMT" options="-parameters" />
-      <module name="Rating-Service" options="" />
+      <module name="Rating-Service" options="-parameters" />
       <module name="ServiceRegistry" options="-parameters" />
       <module name="User-Services" options="-parameters" />
     </option>
